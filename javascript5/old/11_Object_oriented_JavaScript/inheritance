@@ -1,0 +1,40 @@
+One way that object-oriented programming manages complexity is through inheritance. We have already seen some inheritance that comes with universal features of the language. All arrays are a specialized kind of object and all functions are a specialized kind of object. But what's an object?
+
+Looking at the JavaScript documentation, we find a listing for `Object`. Every object in JavaScript inherits its "objectness" from the Object object, so every object has a `toString` method unless it has been deleted. 
+
+
+Object has a method `toString` that takes no argument and returns one value. The return value is a string version of the original object's content. JavaScript's inexplicable design choice is for a fundamental object's toString method to always return the string "[object Object]" regardless of that object's content.
+
+    > ({}).toString
+    < "[object Object]"
+    > ({ name:"Prometheus", age:3851 }).toString
+    < "[object Object]"
+
+Strings, arrays, and functions have a `toString` method of their own. These `toString` methods are slightly more useful, but are still a bit quirky.
+
+    > ("").toString()
+    < ""
+    > (" ").toString()
+    < " "
+    > ("abc").toString()
+    < "abc"
+
+    > ( ['a' , "b" , '  c  ' ] ).toString()
+    < "a,b,  c  "
+    > ( [  ] ).toString()
+    < ""
+
+    > ( function ( a , b ) { return a * b; } ).toString()
+    > "function ( a , b ) { return a * b; }"
+    > (function(){}).toString()
+    > "function (){}"
+
+The `toString`
+
+
+
+
+
+
+Hoisting
+Scoping

@@ -6,9 +6,12 @@ In JavaScript, a function is a kind of object.
 
 A string is a limited kind of immutable object (sort of). It behaves like an object, but it is stored by value not by reference, and applying the `typeof` operator evaluates to "string".
 
+> typeof "abc"
+< "string"
+
 A function is a kind of object. It really is an object in every way. It's a JavaScript object that has a special talent of carrying around a piece of executable JavaScript code and running that code when asked to do so.
 
-Programming functions are inspired by functions in mathematics. A math function resolves to no more than one value for any unique set of input values (arguments), and produces exactly the same output every time it gets exactly the same arguments. In programming, a function might produce different outputs under different conditions, even with the same arguments coming in, but it always produces only one value or no value at all. This will make more sense as you read on.
+Functions in computer programming are inspired by functions in mathematics. A math function resolves to no more than one value for any unique set of input values (arguments), and produces exactly the same output every time it gets exactly the same arguments. In programming, a function might produce different outputs under different conditions, even with the same arguments coming in, but it always produces only one value or no value at all. This will make more sense as you read on.
 
 There are two different special syntaxes for creating a function object,
 
@@ -18,15 +21,15 @@ or
 
     function(p1, p2, p3) { statements }
 
-Each of these uses the `function` keyword to create a function object, but in a slightly different way. They both create a function that takes three parameters, and runs some statements when the function gets invoked (asked to run itself). They both create or overwrite a variable called `nameOfFunction` with an object reference to the function that was just created.
+Each of these uses the `function` keyword to create a function object, but in a slightly different way. Each of these examples takes three parameters, and runs some statements when the function gets invoked ("called," asked to run). They both create or overwrite a variable called `nameOfFunction` with an object reference to the function that was just created.
 
-Here's what's different. When the function keyword appears on the left of the new function's name (first form), it's called a "named function" in JavaScript parlance. It works in a similar way to how the `var` keyword creates a variable. The name of the function is recorded in the variable space alongside all the other variables. If a variable already exists with that name, it is overwritten with a reference to the function object you just made. If the variable does not exist, it is created in the local variable context (we'll cover variable namespace scoping later). But there's one more thing that happens when you use the named function form. Every function object has an immutable property with the key of `name`. The function keyword populates the new function with the property `name:whatever_you_said_the_name_is`. in other words, a named function knows its own name.
+Here's what's different. When the function keyword appears on the left of the new function's name (first form), it's called a "named function" in JavaScript parlance. It works in a similar way to how the `var` keyword creates a variable. The name of the function is recorded in the variable space alongside all the other variables. If a variable already exists with that name, it is overwritten with a reference to the function object you just made. If the variable does not exist, it is created in the local variable context (we'll cover variable scopes later). There's one extra effect that happens when you use the named function form. Every function object has an immutable property with the key of `name`. The function keyword populates the new function with the property `name:whatever_you_said_the_name_is`. in other words, a named function knows its own name.
 
-When you use the second form, the interpreter will create an "anonymous function". All that means is the function object gets created with the property `name:""`. But the second form is not much use without using it somehow. If you don't remember where it is, it will be lost without ever running the function you just made, so we might want to assign the function to a variable like this:
+When you use the second form, the interpreter will create an "anonymous function". All that means is the function object gets created with the property `name:""` (an empty string for a name). But a function is not much use without somehow calling that function. If you don't remember where it is, it will be lost without ever running the function you just made, so we might want to assign the function to a variable like this:
 
     myFunctionName = function(p1, p2, p3) { statements };
 
-Note the semicolon at the end of the previous line. That's there because `function(p1, p2, p3) { statements }` is actually an expression. Think of both of these as a function literal. In the same way that objects and strings have special syntax to describe objects and strings for the interpreter to create, so too functions have these two forms to describe how to make them for the interpreter. One populates the name property with a string version of the function name, the other with an empty string, but both of these creates a function (which is a kind of object) and resolves as an expression to a reference to that object (the kind of object that is also a function).
+Note the semicolon at the end of the previous line. That's there because `function(p1, p2, p3) { statements }` is actually an expression. Think of both of these as a function literal. In the same way that objects and strings have special syntax to describe objects and strings for the interpreter to create, so too functions have these two forms to describe how to make them for the interpreter. One populates the name property with a string version of the function name, the other with an empty string, but both of these creates a function (which is a kind of JavaScript object) and both of these is an expression that resolves to a reference to that brand new function object.
 
 If this is confusing, think of it as a kind of categorization. All functions are objects, but not all objects are functions. All owls are birds but not all birds are owls.
 
@@ -109,7 +112,7 @@ The only conventional way for JavaScript code to create a function is with the f
 
 A function really is a kind of object. It can do everything an object can do, plus the special talent of carrying code around and running it when invoked.
 
-Functions are fundamental to organizing your code and managing complexity. Before functions were invented for computer programming, everything was done with global variables and subroutines, and it was so easy to become a mess. With functions, we have well-defined sets of inputs and a single output. The function might be simple or complex on the inside, but it isn's supposed to mess with much other than its arguments and return value. We still use global variables, but we try to keep them to a minimum so as to minimize coupling between systems (side-effects and dependent behaviors between otherwise disconnected parts of a program).
+Functions are fundamental to organizing your code and managing complexity. Before functions were invented for computer programming, everything was done with global variables and subroutines, and it was so easy to become a mess. With functions, we have well-defined sets of inputs and a single output. The function might be simple or complex on the inside, but it isn't supposed to mess with much other than its arguments and return value. We still use global variables, but we try to keep them to a minimum so as to minimize coupling between systems (side-effects and dependent behaviors between otherwise disconnected parts of a program).
 
 Most functions are not as tiny as the ones shown here. The point of this chapter is to demonstrate what functions are. We'll get bigger in our functions as we go along.
 
@@ -128,7 +131,9 @@ One last point about anonymous vs. named functions. The syntax can be mixed.
 > namedFunc();
    Uncaught ReferenceError: namedFunc is not defined
 
-So when you mix the two, a function gets created, and it knows its own name to be the one given after the function keyword. But no variable by that name gets created because it's not using the `function` keyword is within a `var` statement. Only the variable name from `var` gets created. The name from `function` is the function name, but `function` is not the keyword defining the statement, so we end up with a mismatch between the identifier pointing at the function, and the function's name-name.
+So when you mix the two, a function gets created, and it knows its own name to be the one given after the function keyword. But no variable by that name gets created because the `function` keyword is within a `var` statement. Only the variable name from `var` gets created. The name from `function` is the function name, but `function` is not the keyword defining the statement, so we end up with a mismatch between the identifier pointing at the function, and the function's name-name.
+
+Let's create that second variable refering to that same function.
 
 > var namedFunc = anonFunc;
 < undefined
@@ -138,6 +143,8 @@ So when you mix the two, a function gets created, and it knows its own name to b
 < 5
 > namedFunc.name;
 < "namedFunc"
+
+There's only one copy of that addition function in memory, but there are two variables, each with a copy of that function's object reference. Two variables point to one object, and that object is a function carrying around a piece of executable code. Now it's ready for us to invoke it by putting round parentheses after either of those variable names.
 
 We'll use functions to organize our code going forward. The standard indentation form is
 
